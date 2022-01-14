@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Aplikasi Toko warkop
+    Aplikasi Toko
   </title>
   <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -38,7 +38,7 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="penjual.php">
               <i class="material-icons">analytics</i>
               <p>Data penjual</p>
@@ -56,22 +56,16 @@
               <p>Data transaksi</p>
             </a>
           </li>
-           <li class="nav-item ">
+           <li class="nav-item active ">
             <a class="nav-link" href="barang.php">
               <i class="material-icons">analytics</i>
               <p>Data barang</p>
             </a>
           </li>
-           <li class="nav-item ">
+          <li class="nav-item ">
             <a class="nav-link" href="laporan.php">
               <i class="material-icons">analytics</i>
               <p>LAPORAN</p>
-            </a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="index.php">
-              <i class="material-icons">add</i>
-              <p>Data Update</p>
             </a>
           </li>
         </ul>
@@ -84,6 +78,7 @@
           <div class="navbar-wrapper">
             <a class="navbar-brand" href="javascript:;">Dashboard</a>
           </div>
+          
           <div class="collapse navbar-collapse justify-content-end">
             <form class="navbar-form">
               <div class="input-group no-border">
@@ -94,7 +89,7 @@
                 </button>
               </div>
             </form>
-            <ul class="navbar-nav">
+           <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="javascript:;">
                   <i class="material-icons">dashboard</i>
@@ -145,44 +140,101 @@
           <div class="row">
             <div class="col-md-12">
       <!--- tambah data -->
-      <?php
-        require_once 'koneksi.php';
-        // cek id
-        if (isset($_GET['id'])) {
-          $id = $_GET['id'];
-          // ambil data berdasarkan id_produk        
-          $stid = oci_parse($con,"SELECT * FROM barang WHERE ID_BARANG = '$id'");
-          oci_execute($stid);
-         while (($d = oci_fetch_array($stid, OCI_BOTH)) != false) {
-          ?>
-      <form class="form-horizontal" action="proses_update_barang.php" method="post">
-       <div class="form-row">
-        
-        
-          <input type="hidden" class="form-control" name="tgl_barang" value="<?= $d['TGL_BARANG'] ?>" >
-        <div class="form-group col-md-6">
-          <label for="">ID BARANG</label>
-          <input type="text" class="form-control" name="id_barang" value="<?= $d['ID_BARANG'] ?>">
-        </div>
-        <div class="form-group col-md-6">
-          <label for="">NAMA BARANG</label>
-          <input type="text" class="form-control" name="nama_barang" value="<?= $d['NAMA_BARANG'] ?>">
-        </div>
-        <div class="form-group col-md-6">
-          <label for="">JUMLAH</label>
-          <input type="text" class="form-control" name="jumlah" value="<?= $d['JUMLAH'] ?>">
-        </div>
-        </div>                                                 
-        <div class="form-group">
-          <label class="col-sm-3 control-label"></label>
-          <div class="col-sm-6">
-            <input type="submit" name="submit" class="btn btn-sm btn-primary" value="Update">           
-          </div>
-        </div>
-      </form>
-         <?php }
-        }        ?>
-              
+              <form class="form-horizontal" action="add_barang.php" method="post">
+               <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="">TGL BARANG</label>
+                  <input type="text" class="form-control" name="tgl_barang" placeholder="TGL_BARANG">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">ID BARANG</label>
+                  <input type="text" class="form-control" name="id_barang" placeholder="ID_BARANG">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">NAMA BARANG</label>
+                  <input type="text" class="form-control" name="nama_barang" placeholder="NAMA_BARANG">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="">JUMLAH</label>
+                  <input type="text" class="form-control" name="jumlah" placeholder="JUMLAH">
+                </div> 
+                
+                <div class="form-group">
+                  <label class="col-sm-3 control-label"></label>
+                  <div class="col-sm-6">
+                    <input type="submit" name="submit" class="btn btn-sm btn-success" value="Simpan">           
+                  </div>
+                </div>
+              </form>
+       
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Data barang</h4>
+                  <p class="card-category"></p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          TGL BARANG
+                        </th>
+                        <th>
+                          ID BARANG
+                        </th>
+                        <th>
+                          NAMA BARANG
+                        </th>
+                        <th>
+                          JUMLAH
+                        </th>
+                        <th>
+                          Opsi
+                        </th>
+                      </thead>
+                      <tbody>
+                        <?php 
+    include 'koneksi.php';
+    $stid = oci_parse($con, 'SELECT * from BARANG');
+
+    oci_execute($stid);
+
+    while (($d = oci_fetch_array ($stid, OCI_BOTH)) != false) {
+      ?>
+                        <tr>                          
+                          <td>
+                            <?php echo $d['TGL_BARANG']; ?>
+                          </td>
+                          <td>
+                            <?php echo $d['ID_BARANG']; ?>
+                          </td>
+                          <td>
+                            <?php echo $d['NAMA_BARANG']; ?>
+                          </td>
+                          <td>
+                            <?php echo $d['JUMLAH']; ?>
+                          </td>
+                          <td class="td-actions">
+              <a href="up_barang.php?id=<?= $d['ID_BARANG'] ?>">
+                            <button type="button" rel="tooltip" class="btn btn-success">
+                              <i class="material-icons">edit</i>
+                            </button></a>
+              <a href="del_barang.php?id=<?= $d['ID_BARANG'] ?>" 
+              onclick="return confirm('Anda yakin akan menghapus data ini?')">
+                            <button type="button" rel="tooltip" class="btn btn-danger">
+                              <i class="material-icons">closex</i>
+                            </button></a>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <?php 
+    }
+    ?>
+                    </table>
+                  </div>
+                </div>
+              </div>
+               
             </div>
 
           </div>

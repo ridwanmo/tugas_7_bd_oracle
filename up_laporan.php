@@ -56,13 +56,13 @@
               <p>Data transaksi</p>
             </a>
           </li>
-           <li class="nav-item ">
+          <li class="nav-item ">
             <a class="nav-link" href="barang.php">
               <i class="material-icons">analytics</i>
               <p>Data barang</p>
             </a>
           </li>
-           <li class="nav-item ">
+          <li class="nav-item ">
             <a class="nav-link" href="laporan.php">
               <i class="material-icons">analytics</i>
               <p>LAPORAN</p>
@@ -74,6 +74,7 @@
               <p>Data Update</p>
             </a>
           </li>
+
         </ul>
       </div>
     </div>
@@ -151,26 +152,26 @@
         if (isset($_GET['id'])) {
           $id = $_GET['id'];
           // ambil data berdasarkan id_produk        
-          $stid = oci_parse($con,"SELECT * FROM barang WHERE ID_BARANG = '$id'");
+          $stid = oci_parse($con,"SELECT * FROM laporan WHERE ID_PEMBELI = '$id'");
           oci_execute($stid);
          while (($d = oci_fetch_array($stid, OCI_BOTH)) != false) {
           ?>
-      <form class="form-horizontal" action="proses_update_barang.php" method="post">
+      <form class="form-horizontal" action="proses_update_laporan.php" method="post">
        <div class="form-row">
         
         
-          <input type="hidden" class="form-control" name="tgl_barang" value="<?= $d['TGL_BARANG'] ?>" >
+          <input type="hidden" class="form-control" name="id_pembeli" value="<?= $d['ID_PEMBELI'] ?>" >
         <div class="form-group col-md-6">
-          <label for="">ID BARANG</label>
-          <input type="text" class="form-control" name="id_barang" value="<?= $d['ID_BARANG'] ?>">
+          <label for="">NAMA PEMBELI</label>
+          <input type="text" class="form-control" name="nama_pembeli" value="<?= $d['NAMA_PEMBELI'] ?>">
         </div>
         <div class="form-group col-md-6">
           <label for="">NAMA BARANG</label>
           <input type="text" class="form-control" name="nama_barang" value="<?= $d['NAMA_BARANG'] ?>">
         </div>
         <div class="form-group col-md-6">
-          <label for="">JUMLAH</label>
-          <input type="text" class="form-control" name="jumlah" value="<?= $d['JUMLAH'] ?>">
+          <label for="">TGL TRANSAKSI</label>
+          <input type="text" class="form-control" name="tgl_transaksi" value="<?= $d['TGL_TRANSAKSI'] ?>">
         </div>
         </div>                                                 
         <div class="form-group">
